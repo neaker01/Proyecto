@@ -39,26 +39,26 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        firebaseDatabase= FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
         FirebaseApp.initializeApp(this);
-        autentificador =  FirebaseAuth.getInstance();
+        autentificador = FirebaseAuth.getInstance();
 
         preferencias = new Preferencias(getApplicationContext());
-        user=(TextView)findViewById(R.id.txUserLogin);
-        pass=(TextView)findViewById(R.id.txPassLogin);
+        user = (TextView) findViewById(R.id.txUserLogin);
+        pass = (TextView) findViewById(R.id.txPassLogin);
         btLogin = (Button) findViewById(R.id.btLogin);
         usuario = user.getText().toString();
         clave = pass.getText().toString();
 
 
-        if (preferencias.getSesion() != null){
-            String sesion =preferencias.getSesion();
+        if (preferencias.getSesion() != null) {
+            String sesion = preferencias.getSesion();
             String[] arraySesion = sesion.split("-");
             try {
                 prefEmail = arraySesion[0];
                 prefPassword = arraySesion[1];
                 iniciarSesion(prefEmail, prefPassword);
-            }catch (ArrayIndexOutOfBoundsException ex){
+            } catch (ArrayIndexOutOfBoundsException ex) {
                 // Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             }
         }
@@ -68,7 +68,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!user.getText().toString().isEmpty() &&
-                        !pass.getText().toString().isEmpty()){
+                        !pass.getText().toString().isEmpty()) {
                     // When a user signs in to your app, pass the user's email address and password to signInWithEmailAndPassword
                     autentificador.signInWithEmailAndPassword(user.getText().toString(), pass.getText().toString())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -77,14 +77,15 @@ public class Login extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         fbUser = autentificador.getCurrentUser();
                                         preferencias.guardarPreferencias(user.getText().toString(), pass.getText().toString());
+                                        Toast.makeText(Login.this, "Sesión iniciada", Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(Login.this, MainActivity.class);
                                         startActivity(i);
                                     } else {
                                         Toast.makeText(Login.this, "Fallo autentificacion", Toast.LENGTH_SHORT).show();
 
-                                        try{
+                                        try {
                                             preferencias.eliminarPreferencias();
-                                        } catch (NullPointerException ex){
+                                        } catch (NullPointerException ex) {
                                         }
                                     }
                                 }
@@ -94,23 +95,26 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    public void iniciarSesion(String email, String password) {
+            final String finalEmail = email;
+            final String finalPass = password;
+            autentificador.signInWithEmailAndPassword(email, password).addOnCompleteListener
+                    (new OnCompleteListener<AuthResult>() {
+                        private static final String TAG = "MITAG";
 
-    public void iniciarSesion(String email, String password){
-        final String finalEmail = email;
-        final String  finalPass=password;
-        autentificador.signInWithEmailAndPassword(email, password).addOnCompleteListener
-                (new OnCompleteListener<AuthResult>() {
-                    private static final String TAG = "MITAG";
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            fbUser= autentificador.getCurrentUser();
-                            Intent i = new Intent(Login.this, MainActivity.class);
-                            startActivity(i);
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                fbUser = autentificador.getCurrentUser();
+                                Intent i = new Intent(Login.this, MainActivity.class);
+                                startActivity(i);
+                            } else {
+                                preferencias.eliminarPreferencias();
+                                Log.v(TAG, "ERROOOOOO " + task.getException().toString());
+                            }
                         }
-                        else{
-                            preferencias.eliminarPreferencias();
-                            Log.v(TAG, "ERROOOOOO "+task.getException().toString() );}}});}
-}
+                    });
+        }
 
+}
 

@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Bicicleta> listaBicis2;
 
 
+    private Button btRegistrar;
+    private Button btLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,34 @@ public class MainActivity extends AppCompatActivity {
         listaBicis = new ArrayList<>();
         listaBicis2 = new ArrayList<>();
 
+
+
+
+
+
+
+
+
+
+
+        btLogin  = (Button) findViewById(R.id.btLogin);
+        btRegistrar  = (Button) findViewById(R.id.btRegistro);
+        btLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Login.class);
+                startActivity(i);
+
+            }
+        });
+        btRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Registro.class);
+                startActivity(i);
+            }
+        });
+
         //FALTARIA EL TEMA DE LAS FOTOS A VER COMO LO HACEMOS
         //Opcion 1: Crear actividad para meter las bicicletas a mano junto con la foto
         // Opcion 2: Hacerlo desde firebase
@@ -52,16 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         getBicis();
-
-
-
-        System.out.println("EL ARRAY DE BICIS ES de tamaño  " +listaBicis2.size());
-
-        for (Bicicleta b: listaBicis2) {
-            System.out.println("BICICLETA " +b.toString());
-
-        }
-
     }
 
     public void agregarBici(Bicicleta b1){
