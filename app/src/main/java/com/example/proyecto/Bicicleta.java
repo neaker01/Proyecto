@@ -72,6 +72,12 @@ public class Bicicleta implements Parcelable {
     }
 
 
+    public void setUri(String uri){
+        this.imagen=Uri.parse(uri);
+    }
+
+
+
     public void setKey(String key){
         this.key=key;
     }

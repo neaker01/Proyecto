@@ -1,6 +1,7 @@
 package com.example.proyecto;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 
 public class ListaProductos extends AppCompatActivity {
 
+
+    public static final int OK = 1;
     public static final int DETALLE = 0;
     public static final int ADD_LUGAR = 1;
     public static final int ELIMINAR = 2;
@@ -91,67 +94,50 @@ public class ListaProductos extends AppCompatActivity {
                         System.out.println("NODO " + hijo.getValue().toString());
                         Bicicleta bici = new Bicicleta();
 
-                      //  bici.s
-
-
-
-
-
-
-/*
-                        private int id;
-                        private String tipo; //Montaña, Carretera, electricas
-                        private int tallaRueda;  // cambiar a double, puede haber de 27'5
-                        private String modelo;
-                        private String color;
-                        private int numeroPlatos;
-                        private String marca;
-                        private String talla;
-                        private double precio;
-                        private int stock;
-                        private Uri imagen;
-                        private String key;
-
-
-                     */
-
-                        String modelo = (String) hijo.child("nombre").getValue();
-                        String pais = (String) hijo.child("pais").getValue();
-                        String localidad = (String) hijo.child("localidad").getValue();
-                        String fecha = (String) hijo.child("fecha").getValue();
-                        Double latitud = 0.0;
-                        Double longitud= 0.0;
-                        long puntos = 0;
+                        String modelo = (String) hijo.child("modelo").getValue();
+                        int id =  0;
+                        String tipo = (String) hijo.child("tipo").getValue();
+                        int tallaRueda =  0;
+                        String color = (String) hijo.child("color").getValue();
+                        int numeroPlatos =  0;
+                        String marca = (String) hijo.child("marca").getValue();
+                        String talla = (String) hijo.child("talla").getValue();
+                        Double precio = 0.0;
+                        String uri = (String) hijo.child("uri").getValue();
+                        String key = (String) hijo.child("key").getValue();
+                        int stock =  0;
                         try {
-                            latitud = Double.parseDouble(String.valueOf(hijo.child("latitud").getValue()));
-                            longitud = Double.parseDouble(String.valueOf(hijo.child("longitud").getValue()));
-                            puntos = ((long) hijo.child("puntos").getValue());
+                             id =  Integer.parseInt((String) hijo.child("id").getValue());
+                             tallaRueda =  Integer.parseInt((String) hijo.child("tallaRueda").getValue());
+                             numeroPlatos =  Integer.parseInt((String) hijo.child("numeroPlatos").getValue());
+                             precio =  Double.parseDouble((String) hijo.child("precio").getValue());
+                             stock =  Integer.parseInt((String) hijo.child("stock").getValue());
                         }catch(NumberFormatException ex){
                             preferencias.eliminarPreferencias();
-                            Intent i = new Intent(MainActivity.this, Login.class);
+                            Intent i = new Intent(ListaProductos.this, Login.class);
                             startActivity(i);
                         }
-                        String comentarios = (String) hijo.child("comentario").getValue();
-                        String key = (String) hijo.child("key").getValue();
 
-                        lugar.setNombre(nombre);
-                        lugar.setFecha(fecha);
-                        lugar.setPais(pais);
-                        lugar.setLocalidad(localidad);
-                        lugar.setComentario(comentarios);
-                        lugar.setLatitud(latitud);
-                        lugar.setLongitud(longitud);
-                        lugar.setPuntos((int) puntos);
-                        lugar.setkey(key);
 
-                        //   String fbkey = (String) hijo.getKey();
-                        //    lecFB.setFbkey(fbkey);
+                        bici.setModelo(modelo);
+                        bici.setId(id);
+                        bici.setTipo(tipo);
+                        bici.setTallaRueda(tallaRueda);
+                        bici.setColor(color);
+                        bici.setNumeroPlatos(numeroPlatos);
+                        bici.setMarca(marca);
+                        bici.setTalla(talla);
+                        bici.setPrecio(precio);
+                        bici.setUri(uri);
+                        bici.setKey(key);
+                        bici.setStock(stock);
 
-                        lugaresFirebase.add(lugar);
+                        listaFirebase.add(bici);
+
                     }
 
-                    lugaresFirebase = lugaresFirebase;
-                    adaptador.setArray(lugaresFirebase);
+                    listaFirebase = listaFirebase;
+                    adaptador.setArray(listaFirebase);
                     adaptador.notifyDataSetChanged();
 
                 }
@@ -162,20 +148,35 @@ public class ListaProductos extends AppCompatActivity {
             });
 
 
+
+
+            //--------RELLENAR PARA CUANDO SE VAYA INTERNET
         }else{ // Si no hay internet cogemos los lugares de la bd local
 
-            listaLugares = gestor.getLugares();
+          //  listaFirebase = gestor.getLugares();
 
             // System.out.println("lugares bdd " +listaLugares.get(0).toString());
-            System.out.println("Array tamaño " +listaLugares.size());
+          //  System.out.println("Array tamaño " +listaLugares.size());
 
-            adaptador.setArray(listaLugares);
+           // adaptador.setArray(listaLugares);
+
             adaptador.notifyDataSetChanged();
         }
 
 
     }
 
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // listaLugares =  gestor.getLugares();
+        if(resultCode == OK){
+            getBicicletas();
+        }
+    }
 
     public Boolean isOnlineNet() {
         try {
