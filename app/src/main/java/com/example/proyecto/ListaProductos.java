@@ -68,7 +68,7 @@ public class ListaProductos extends AppCompatActivity {
         autentificador =  FirebaseAuth.getInstance();
         usuario = autentificador.getCurrentUser();
 
-        listaFirebase = new ArrayList<>();
+
 
         Bicicleta b1 = new Bicicleta("carretera", 27, "Cube dos", "Negra", 2, "Cube", "M", 899, 3);
         b1.setId(2);
@@ -99,6 +99,9 @@ public class ListaProductos extends AppCompatActivity {
     }
 
     public void getBicicletas(){
+
+        listaFirebase = new ArrayList();
+
         //if (isOnlineNet()) { //  si hay internet cogemos los lugares de firebase
             final Query listaBicis =
                     FirebaseDatabase.getInstance().getReference()
@@ -169,11 +172,11 @@ public class ListaProductos extends AppCompatActivity {
 
 
                     System.out.println("tam array fuera del bucle" +listaFirebase.size());
-                    listaFirebase = listaFirebase;
+                   // listaFirebase = listaFirebase;
                     adaptador.setArray(listaFirebase);
                     adaptador.notifyDataSetChanged();
 
-                    setAdapter(listaFirebase);
+                 //   setAdapter(listaFirebase);
 
 
                 }
