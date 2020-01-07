@@ -15,19 +15,24 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ListaProductos extends AppCompatActivity {
-
 
     public static final int OK = 1;
     public static final int DETALLE = 0;
@@ -50,42 +55,55 @@ public class ListaProductos extends AppCompatActivity {
     private FirebaseAuth autentificador;
     private FirebaseUser usuario;
     private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference dbReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_productos);
-
         firebaseDatabase= FirebaseDatabase.getInstance();
+        dbReference = firebaseDatabase.getReference();
+
         FirebaseApp.initializeApp(this);
         autentificador =  FirebaseAuth.getInstance();
         usuario = autentificador.getCurrentUser();
 
+        listaFirebase = new ArrayList<>();
+
+        Bicicleta b1 = new Bicicleta("carretera", 27, "Cube dos", "Negra", 2, "Cube", "M", 899, 3);
+        b1.setId(2);
+        //Ahora cogemos toda la lista de bicicletas
         preferencias = new Preferencias(getApplicationContext());
       //  ayudante = new Ayudante(this);
        // gestor = new GestorLugar(this, true);
        // btAdd = findViewById(R.id.btn_add);
         getBicicletas();
-        usuario = autentificador.getCurrentUser();
 
        this.contenedor = (ConstraintLayout) findViewById(R.id.contenedor);
        this.recyclerBicicletas = (RecyclerView) findViewById(R.id.recyclerBicicletas);
 
         setAdapter(listaFirebase);
         lymanager = new LinearLayoutManager(this);
-        recyclerBicicletas.setLayoutManager(lymanager);
+         recyclerBicicletas.setLayoutManager(lymanager);
 
+        if (listaFirebase.size() > 0){
+            for (Bicicleta b: listaFirebase
+                 )
+                System.out.println("Bici 1" + b.toString());
 
+            }else{
+                System.out.println("array vacio");
+        }
+
+        System.out.println("ONCREATE");
     }
 
-
     public void getBicicletas(){
-
-        if (isOnlineNet()) { //  si hay internet cogemos los lugares de firebase
-            listaFirebase = new ArrayList<>();
+        //if (isOnlineNet()) { //  si hay internet cogemos los lugares de firebase
             final Query listaBicis =
                     FirebaseDatabase.getInstance().getReference()
-                            .child("/bicicletas/"+usuario.getUid()+"/");  //usuario.getUid() +"-"+ usuario.getDisplayName()+"/libro/");
+                            .child("/bicicletas/");
+        //usuario.getUid() +"-"+ usuario.getDisplayName()+"/libro/");
             //.orderByKey();
             listaBicis.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -93,7 +111,6 @@ public class ListaProductos extends AppCompatActivity {
                     for (DataSnapshot hijo : dataSnapshot.getChildren()) {
                         System.out.println("NODO " + hijo.getValue().toString());
                         Bicicleta bici = new Bicicleta();
-
                         String modelo = (String) hijo.child("modelo").getValue();
                         int id =  0;
                         String tipo = (String) hijo.child("tipo").getValue();
@@ -105,19 +122,32 @@ public class ListaProductos extends AppCompatActivity {
                         Double precio = 0.0;
                         String uri = (String) hijo.child("uri").getValue();
                         String key = (String) hijo.child("key").getValue();
+                        bici.setKey(key);
+
                         int stock =  0;
                         try {
-                             id =  Integer.parseInt((String) hijo.child("id").getValue());
-                             tallaRueda =  Integer.parseInt((String) hijo.child("tallaRueda").getValue());
-                             numeroPlatos =  Integer.parseInt((String) hijo.child("numeroPlatos").getValue());
-                             precio =  Double.parseDouble((String) hijo.child("precio").getValue());
-                             stock =  Integer.parseInt((String) hijo.child("stock").getValue());
+                           // String idStrig = ((String) hijo.child("id").getValue());
+                             id = Integer.parseInt((String.valueOf( hijo.child("id").getValue())));
+                            tallaRueda=  Integer.parseInt((String.valueOf( hijo.child("tallaRueda").getValue())));
+                            numeroPlatos=  Integer.parseInt((String.valueOf( hijo.child("numeroPlatos").getValue())));
+                            precio=  Double.parseDouble((String.valueOf(hijo.child("precio").getValue())));
+                            stock=  Integer.parseInt((String.valueOf( hijo.child("stock").getValue())));
+
+
+
+                            // tallaRueda =  Integer.parseInt((String) hijo.child("tallaRueda").getValue());
+                           //  numeroPlatos =  Integer.parseInt((String) hijo.child("numeroPlatos").getValue());
+                           //  precio =  Double.parseDouble((String) hijo.child("precio").getValue());
+                            // stock =  Integer.parseInt((String) hijo.child("stock").getValue());
+                            bici.setStock(stock);
                         }catch(NumberFormatException ex){
                             preferencias.eliminarPreferencias();
-                            Intent i = new Intent(ListaProductos.this, Login.class);
-                            startActivity(i);
-                        }
+                           // Intent i = new Intent(ListaProductos.this, Login.class);
+                            // startActivity(i);
+                           // Toast.makeText(ListaProductos.this, "HA CRASHEADO AL CONVERTIR NUMEROS", Toast.LENGTH_SHORT).show();
 
+                            System.out.println("HA CRASHEADO AL CONVERTIR NUMERO");
+                          }
 
                         bici.setModelo(modelo);
                         bici.setId(id);
@@ -128,17 +158,23 @@ public class ListaProductos extends AppCompatActivity {
                         bici.setMarca(marca);
                         bici.setTalla(talla);
                         bici.setPrecio(precio);
-                        bici.setUri(uri);
-                        bici.setKey(key);
-                        bici.setStock(stock);
+                        // bici.setUri(uri);
+                        System.out.println("Bici segundo sout " +bici.toString());
 
                         listaFirebase.add(bici);
 
+                        System.out.println("Se añade al array? " +listaFirebase.size());
+                        System.out.println("La bici es null? " +bici.toString());
                     }
 
+
+                    System.out.println("tam array fuera del bucle" +listaFirebase.size());
                     listaFirebase = listaFirebase;
                     adaptador.setArray(listaFirebase);
                     adaptador.notifyDataSetChanged();
+
+                    setAdapter(listaFirebase);
+
 
                 }
 
@@ -147,11 +183,8 @@ public class ListaProductos extends AppCompatActivity {
                 }
             });
 
-
-
-
             //--------RELLENAR PARA CUANDO SE VAYA INTERNET
-        }else{ // Si no hay internet cogemos los lugares de la bd local
+       /* }else{ // Si no hay internet cogemos los lugares de la bd local
 
           //  listaFirebase = gestor.getLugares();
 
@@ -161,13 +194,11 @@ public class ListaProductos extends AppCompatActivity {
            // adaptador.setArray(listaLugares);
 
             adaptador.notifyDataSetChanged();
-        }
+        //}
+        */
 
-
+        System.out.println("tam array fuera del data change" +listaFirebase.size());
     }
-
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

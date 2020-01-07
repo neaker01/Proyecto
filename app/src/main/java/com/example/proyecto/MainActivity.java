@@ -47,16 +47,6 @@ public class MainActivity extends AppCompatActivity {
         listaBicis = new ArrayList<>();
         listaBicis2 = new ArrayList<>();
 
-
-
-
-
-
-
-
-
-
-
         btLogin  = (Button) findViewById(R.id.btLogin);
         btRegistrar  = (Button) findViewById(R.id.btRegistro);
         btLogin.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot hijo : dataSnapshot.getChildren()) {
-                    System.out.println("NODO " + hijo.getValue().toString());
+                  //  System.out.println("NODO " + hijo.getValue().toString());
                     Bicicleta b = new Bicicleta();
 
 

@@ -7,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,19 +39,13 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull Adaptador.ViewHolder viewHolder, int i) {
+        Bicicleta b = (Bicicleta) lista.get(i);
 
-       /* Test test = (Test) listaTests.get(i);
+        viewHolder.txModelo.setText(b.getModelo());
+        viewHolder.txPrecio.setText(String.valueOf(b.getPrecio()));
 
-        viewHolder.txNumTest.setText(test.getId());
-        if (test.getAprobado()){
-            viewHolder.txAprobado.setText("Si"); }
-        else{   viewHolder.txAprobado.setText("No"); }
 
-        viewHolder.txNumAciertos.setText(test.getAciertos());
-        viewHolder.txNumFallos.setText(test.getFallos());
-
-    */
-
+        System.out.println("ACTIVIDAD adaptador la bici es: " +b.toString());
         viewHolder.bind(lista.get(i), (OnItemClickListener) listener);
     }
 
@@ -66,7 +62,6 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         //  ImageView imagenLectura;
         TextView txModelo;
         TextView txPrecio;
@@ -86,7 +81,6 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     listener.onItemClick(b);
                 }
             });

@@ -106,7 +106,7 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 fbUser = autentificador.getCurrentUser();
-                                Intent i = new Intent(Login.this, MainActivity.class);
+                                Intent i = new Intent(Login.this, ListaProductos.class);
                                 startActivity(i);
                             } else {
                                 preferencias.eliminarPreferencias();
