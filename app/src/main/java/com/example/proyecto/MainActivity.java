@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         //Ahora cogemos toda la lista de bicicletas
 
 
-        getBicis();
+        //getBicis();
     }
 
     public void agregarBici(Bicicleta b1){

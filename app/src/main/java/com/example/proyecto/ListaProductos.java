@@ -67,12 +67,6 @@ public class ListaProductos extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         autentificador =  FirebaseAuth.getInstance();
         usuario = autentificador.getCurrentUser();
-
-
-
-        Bicicleta b1 = new Bicicleta("carretera", 27, "Cube dos", "Negra", 2, "Cube", "M", 899, 3);
-        b1.setId(2);
-        //Ahora cogemos toda la lista de bicicletas
         preferencias = new Preferencias(getApplicationContext());
       //  ayudante = new Ayudante(this);
        // gestor = new GestorLugar(this, true);
@@ -86,14 +80,8 @@ public class ListaProductos extends AppCompatActivity {
         lymanager = new LinearLayoutManager(this);
          recyclerBicicletas.setLayoutManager(lymanager);
 
-        if (listaFirebase.size() > 0){
-            for (Bicicleta b: listaFirebase
-                 )
-                System.out.println("Bici 1" + b.toString());
 
-            }else{
-                System.out.println("array vacio");
-        }
+
 
         System.out.println("ONCREATE");
     }
@@ -101,6 +89,11 @@ public class ListaProductos extends AppCompatActivity {
     public void getBicicletas(){
 
         listaFirebase = new ArrayList();
+
+        Bicicleta b1 = new Bicicleta("carretera", 27, "Cube dos", "Negra", 2, "Cube", "M", 899, 3);
+        b1.setId(2);
+
+        listaFirebase.add(b1);
 
         //if (isOnlineNet()) { //  si hay internet cogemos los lugares de firebase
             final Query listaBicis =
@@ -161,24 +154,19 @@ public class ListaProductos extends AppCompatActivity {
                         bici.setMarca(marca);
                         bici.setTalla(talla);
                         bici.setPrecio(precio);
-                        // bici.setUri(uri);
+                      //   bici.setUri(null);
                         System.out.println("Bici segundo sout " +bici.toString());
-
                         listaFirebase.add(bici);
 
                         System.out.println("Se añade al array? " +listaFirebase.size());
                         System.out.println("La bici es null? " +bici.toString());
                     }
 
-
                     System.out.println("tam array fuera del bucle" +listaFirebase.size());
-                   // listaFirebase = listaFirebase;
+                    listaFirebase = listaFirebase;
                     adaptador.setArray(listaFirebase);
                     adaptador.notifyDataSetChanged();
-
-                 //   setAdapter(listaFirebase);
-
-
+                    setAdapter(listaFirebase);
                 }
 
                 @Override

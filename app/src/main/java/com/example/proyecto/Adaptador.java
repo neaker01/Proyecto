@@ -41,11 +41,9 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
     public void onBindViewHolder(@NonNull Adaptador.ViewHolder viewHolder, int i) {
         Bicicleta b = (Bicicleta) lista.get(i);
 
-        viewHolder.txModelo.setText(b.getModelo());
-        viewHolder.txPrecio.setText(String.valueOf(b.getPrecio()));
+        viewHolder.txModelo.setText(b.getModelo().toString());
+        viewHolder.txPrecio.setText(String.valueOf(b.getPrecio()).toString());
 
-
-        System.out.println("ACTIVIDAD adaptador la bici es: " +b.toString());
         viewHolder.bind(lista.get(i), (OnItemClickListener) listener);
     }
 
