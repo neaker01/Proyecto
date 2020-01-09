@@ -32,68 +32,93 @@
         android:id="@+id/txMarca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/marca"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txModelo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imaheAddBike"
+        tools:layout_editor_absoluteX="8dp" />
 
     <EditText
-        android:id="@+id/txPrecio"
+        android:id="@+id/txNumSerie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:ems="10"
-        android:inputType="number"
-        android:hint="@string/precio"
-        app:layout_constraintBottom_toTopOf="@+id/txColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txModelo" />
+        android:hint="@string/numeroserie"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/btGuardar"
+        app:layout_constraintTop_toBottomOf="@+id/txStock"
+        tools:layout_editor_absoluteX="8dp" />
 
     <EditText
         android:id="@+id/txColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/color"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txTalla"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txPrecio" />
+        app:layout_constraintTop_toBottomOf="@+id/txPrecio"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <EditText
+        android:id="@+id/txPlatos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/platos"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/txStock"
+        app:layout_constraintTop_toBottomOf="@+id/txTalla"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <EditText
+        android:id="@+id/txStock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/stock"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/txNumSerie"
+        app:layout_constraintTop_toBottomOf="@+id/txPlatos"
+        tools:layout_editor_absoluteX="8dp" />
 
     <EditText
         android:id="@+id/txModelo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:ems="10"
         android:hint="@string/modelo"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txPrecio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txMarca" />
+        app:layout_constraintTop_toBottomOf="@+id/txMarca"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <EditText
+        android:id="@+id/txTalla"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/talla"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/txPlatos"
+        app:layout_constraintTop_toBottomOf="@+id/txColor"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <EditText
+        android:id="@+id/txPrecio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/precio"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/txColor"
+        app:layout_constraintTop_toBottomOf="@+id/txModelo"
+        tools:layout_editor_absoluteX="8dp" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imaheAddBike"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
@@ -101,74 +126,20 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/txMarca"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_directions_bike_black" />
+        app:srcCompat="@drawable/ic_directions_bike_black"
+        tools:srcCompat="@drawable/ic_directions_bike_black" />
 
-    <EditText
-        android:id="@+id/txPlatos"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btSelectImage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:hint="@string/platos"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/txStock"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txTalla" />
-
-    <EditText
-        android:id="@+id/txTalla"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:hint="@string/talla"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/txPlatos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txColor" />
-
-    <EditText
-        android:id="@+id/txStock"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:hint="@string/stock"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/txNumSerie"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txPlatos" />
-
-    <EditText
-        android:id="@+id/txNumSerie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:hint="@string/numeroserie"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txStock" />
+        android:layout_marginBottom="16dp"
+        android:text="Seleccionar"
+        app:layout_constraintBottom_toTopOf="@+id/txMarca"
+        app:layout_constraintStart_toEndOf="@+id/imaheAddBike" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

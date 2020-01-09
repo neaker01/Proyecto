@@ -18,9 +18,7 @@ public class MenuAdministrador extends AppCompatActivity {
         setContentView(R.layout.activity_menu_administrador);
 
         lista = findViewById(R.id.btLista);
-
         addBike = findViewById(R.id.btAddProducto);
-
 
         addBike.setOnClickListener(new View.OnClickListener() {
             @Override
