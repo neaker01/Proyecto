@@ -1,11 +1,13 @@
 package com.example.proyecto;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,60 +19,68 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
 
     private static final String TAG = "XYZ";
     private final OnItemClickListener listener;
-    private ArrayList<Bicicleta> lista;
+    private ArrayList<Bicicleta> listaBicicletas;
 
+    //---Constructor que recibe el array de lecturas----
 
-    public Adaptador(ArrayList<Bicicleta> lista, OnItemClickListener listener) {
-        this.lista = lista;
+    public Adaptador(ArrayList<Bicicleta> arrayBicicletas, OnItemClickListener listener) {
+        this.listaBicicletas = arrayBicicletas;
         this.listener = listener;
     }
 
-    public void setArray(ArrayList<Bicicleta> lista) {
-        this.lista = lista;
+    public void setArray(ArrayList<Bicicleta> arrayBicicletas) {
+        this.listaBicicletas = arrayBicicletas;
     }
 
     @NonNull
     @Override
-    public Adaptador.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public Adaptador.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_productos, viewGroup, false);
         return new Adaptador.ViewHolder(itemView);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull Adaptador.ViewHolder viewHolder, int i) {
-        Bicicleta b = (Bicicleta) lista.get(i);
+        Bicicleta bicicleta = (Bicicleta) listaBicicletas.get(i);
 
-        viewHolder.txModelo.setText(b.getModelo().toString());
-        viewHolder.txPrecio.setText(String.valueOf(b.getPrecio()).toString());
+        viewHolder.txModelo.setText(bicicleta.getModelo());
+        viewHolder.txPrecio.setText(String.valueOf(bicicleta.getPrecio()));
 
-        viewHolder.bind(lista.get(i), (OnItemClickListener) listener);
+
+
+      /*  if(bicicleta.getImagen() != null){
+
+            Log.v(TAG, "En adaptador: uri no es null");
+            viewHolder.imagenLectura.setImageURI(lectura.getImagen());
+        }
+        */
+
+       // viewHolder.imagenLectura.setImageURI(lectura.getImagen());
+
+        viewHolder.bind(listaBicicletas.get(i), listener);
     }
 
-
+    @Override
+    public int getItemCount() {
+        return listaBicicletas.size();
+    }
 
     public interface OnItemClickListener {
         void onItemClick(Bicicleta b);
-
     }
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        //  ImageView imagenLectura;
+        ImageView imagenBicicleta;
         TextView txModelo;
         TextView txPrecio;
-        ImageView imagenBike;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //   imagenLectura=itemView.findViewById(R.id.imagenLecturaRecycler);
-            txModelo = itemView.findViewById(R.id.recycler_modelo);
-            txPrecio = itemView.findViewById(R.id.recycler_precio);
-            imagenBike = itemView.findViewById(R.id.recycler_image);
+
+            imagenBicicleta=itemView.findViewById(R.id.recycler_image);
+            txModelo=itemView.findViewById(R.id.recycler_modelo);
+            txPrecio=itemView.findViewById(R.id.recycler_precio);
 
         }
 
@@ -79,11 +89,10 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     listener.onItemClick(b);
                 }
             });
         }
     }
-
-
 }
