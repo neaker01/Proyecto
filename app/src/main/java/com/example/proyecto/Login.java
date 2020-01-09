@@ -78,8 +78,13 @@ public class Login extends AppCompatActivity {
                                         fbUser = autentificador.getCurrentUser();
                                         preferencias.guardarPreferencias(user.getText().toString(), pass.getText().toString());
                                         Toast.makeText(Login.this, "Sesión iniciada", Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(Login.this, MainActivity.class);
-                                        startActivity(i);
+                                        if (user.toString().contains("admin") || user.toString().contains("Admin")) {
+                                            Intent i = new Intent(Login.this, MenuAdministrador.class);
+                                            startActivity(i);
+                                        }
+                                        else {
+                                            Intent i = new Intent(Login.this, ListaProductos.class);
+                                            startActivity(i); }
                                     } else {
                                         Toast.makeText(Login.this, "Fallo autentificacion", Toast.LENGTH_SHORT).show();
 
@@ -106,8 +111,15 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 fbUser = autentificador.getCurrentUser();
-                                Intent i = new Intent(Login.this, ListaProductos.class);
-                                startActivity(i);
+
+
+                                if (finalEmail.toString().contains("admin") || finalEmail.toString().contains("Admin")) {
+                                    Intent i = new Intent(Login.this, MenuAdministrador.class);
+                                    startActivity(i);
+                                }
+                                else {
+                                    Intent i = new Intent(Login.this, ListaProductos.class);
+                                    startActivity(i); }
                             } else {
                                 preferencias.eliminarPreferencias();
                                 Log.v(TAG, "ERROOOOOO " + task.getException().toString());

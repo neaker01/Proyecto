@@ -1,8 +1,25 @@
 <resources>
     <string name="app_name">Proyecto</string>
-
     <string name="desc">Desc</string>
-
     <string name="registro">Registrarse</string>
+
+    <!--Actividad añadir bike -->
+    <string name="marca">Marca</string>
+    <string name="modelo">Modelo</string>
+    <string name="color">Color</string>
+    <string name="platos">Platos</string>
+    <string name="talla">Talla</string>
+    <string name="precio">Precio</string>
+    <string name="stock">Stock</string>
+    <string name="numeroserie">Nº de serie</string>
+
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+
+    <!--Menu administrador -->
+    <string name="lista">Lista productos</string>
+    <string name="añadir">Añadir producto</string>
+
+
 
 </resources>
