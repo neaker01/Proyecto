@@ -3,6 +3,7 @@ package com.example.proyecto;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,7 +74,7 @@ public class ListaProductos extends AppCompatActivity {
        // btAdd = findViewById(R.id.btn_add);
         getBicicletas();
 
-       this.contenedor = (ConstraintLayout) findViewById(R.id.contenedor);
+       this.contenedor =  (ConstraintLayout) findViewById(R.id.contenedor);
        this.recyclerBicicletas = (RecyclerView) findViewById(R.id.recyclerBicicletas);
 
         setAdapter(listaFirebase);

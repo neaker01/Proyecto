@@ -1,6 +1,7 @@
 package com.example.proyecto;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
             imagenBicicleta=itemView.findViewById(R.id.recycler_image);
             txModelo=itemView.findViewById(R.id.recycler_modelo);
             txPrecio=itemView.findViewById(R.id.recycler_precio);
+
+            txPrecio.setGravity(Gravity.RIGHT);
 
         }
 
